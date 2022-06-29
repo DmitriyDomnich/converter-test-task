@@ -1,0 +1,24 @@
+<ng-container *ngIf="currencyRates['UAH'] | currencyNames as currencyRates">
+  <convert-form
+    #form1
+    [currencyRates]="currencyRates"
+    (onCurrencyChanged)="firstCurrencyChange($event)"
+    (onValueChanged)="
+      $event
+        ? (form2.inputValue = converterService.convert($event, from, to))
+        : (form2.inputValue = null)
+    "
+    [selectValue]="from"
+  ></convert-form>
+  <convert-form
+    #form2
+    [currencyRates]="currencyRates"
+    (onCurrencyChanged)="secondCurrencyChange($event)"
+    (onValueChanged)="
+      $event
+        ? (form1.inputValue = converterService.convert($event, to, from))
+        : (form1.inputValue = null)
+    "
+    [selectValue]="to"
+  ></convert-form>
+</ng-container>

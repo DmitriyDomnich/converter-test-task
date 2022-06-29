@@ -1,0 +1,22 @@
+<div
+  class="inline-block relative after:content-['▼'] mr-4 after:absolute after:right-3 after:top-1/2 after:-translate-y-1/2"
+>
+  <select
+    class="py-2 transition-all ease-in-out duration-75 focus:outline-pink-600 focus:outline-4 focus:outline appearance-none w-32 px-3 border border-gray-400 rounded-lg"
+    #select
+    [(ngModel)]="selectValue"
+    (change)="changeCurrency()"
+  >
+    <option *ngFor="let currencyName of currencyRates!">
+      {{ currencyName }}
+    </option>
+  </select>
+</div>
+<input
+  #valueInput
+  type="number"
+  placeholder="0"
+  (ngModelChange)="inputValue = $event; onValueChanged.emit($event)"
+  [ngModel]="inputValue"
+  class="w-32 border transition-all ease-in-out duration-75 focus:outline-pink-600 focus:outline-4 focus:outline border-gray-400 rounded-lg px-3 py-2"
+/>
