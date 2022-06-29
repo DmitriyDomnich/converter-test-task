@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CurrenciesConversionRates } from 'src/models/currencies-converion-rates';
 import { ConvertFormComponent } from './convert-form/convert-form.component';
 import { ConverterService } from './converter.service';
@@ -7,7 +7,7 @@ import { ConverterService } from './converter.service';
   selector: 'converter',
   templateUrl: './converter.component.html',
 })
-export class ConverterComponent implements OnInit {
+export class ConverterComponent {
   @ViewChild('form1') form1Ref: ConvertFormComponent;
   @ViewChild('form2') form2Ref: ConvertFormComponent;
 
@@ -19,31 +19,13 @@ export class ConverterComponent implements OnInit {
   firstCurrencyChange(currencyName: string) {
     if (this.to === currencyName) {
       this.to = this.from;
-      this.form1Ref.inputValue = this.form2Ref.inputValue;
+      this.form2Ref.inputValue = this.form1Ref.inputValue;
     }
 
     this.from = currencyName;
 
-    if (this.form2Ref.inputValue) {
-      this.form2Ref.inputValue = +this.converterService.convert(
-        +this.form1Ref.inputValue!,
-        this.from,
-        this.to
-      );
-    } else {
-      this.form2Ref.inputValue = null;
-    }
-  }
-  secondCurrencyChange(currencyName: string) {
-    if (this.from === currencyName) {
-      this.from = this.to;
-      this.form2Ref.inputValue = this.form1Ref.inputValue;
-    }
-
-    this.to = currencyName;
-
     if (this.form1Ref.inputValue) {
-      this.form1Ref.inputValue = +this.converterService.convert(
+      this.form1Ref.inputValue = this.converterService.convert(
         this.form2Ref.inputValue!,
         this.to,
         this.from
@@ -52,6 +34,24 @@ export class ConverterComponent implements OnInit {
       this.form1Ref.inputValue = null;
     }
   }
-  ngOnInit(): void {}
+  secondCurrencyChange(currencyName: string) {
+    if (this.from === currencyName) {
+      this.from = this.to;
+      this.form1Ref.inputValue = this.form2Ref.inputValue;
+    }
+
+    this.to = currencyName;
+
+    if (this.form2Ref.inputValue) {
+      this.form2Ref.inputValue = this.converterService.convert(
+        this.form1Ref.inputValue!,
+        this.from,
+        this.to
+      );
+    } else {
+      this.form2Ref.inputValue = null;
+    }
+  }
+
   constructor(public converterService: ConverterService) {}
 }

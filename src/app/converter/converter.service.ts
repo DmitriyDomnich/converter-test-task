@@ -9,6 +9,7 @@ export class ConverterService {
   private currencyRates: CurrenciesConversionRates;
 
   convert(value: number, from: string, to: string): number {
+    console.log(`converting ${value} from ${from} to ${to}`);
     if (value) {
       return +(this.currencyRates[from][to] * value).toFixed(2);
     }
