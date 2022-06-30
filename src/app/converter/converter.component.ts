@@ -19,16 +19,16 @@ export class ConverterComponent {
   firstCurrencyChange(currencyName: string) {
     if (this.to === currencyName) {
       this.to = this.from;
-      this.form2Ref.inputValue = this.form1Ref.inputValue;
+      this.form1Ref.inputValue = this.form1Ref.inputValue;
     }
 
     this.from = currencyName;
 
     if (this.form1Ref.inputValue) {
-      this.form1Ref.inputValue = this.converterService.convert(
-        this.form2Ref.inputValue!,
-        this.to,
-        this.from
+      this.form2Ref.inputValue = this.converterService.convert(
+        this.form1Ref.inputValue!,
+        this.from,
+        this.to
       );
     } else {
       this.form1Ref.inputValue = null;
@@ -37,7 +37,7 @@ export class ConverterComponent {
   secondCurrencyChange(currencyName: string) {
     if (this.from === currencyName) {
       this.from = this.to;
-      this.form1Ref.inputValue = this.form2Ref.inputValue;
+      this.form1Ref.inputValue = this.form1Ref.inputValue;
     }
 
     this.to = currencyName;
